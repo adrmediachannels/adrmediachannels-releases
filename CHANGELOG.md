@@ -1,27 +1,34 @@
 # CHANGELOG: ADRMediaChannels
 
-# ADRMediaChannels v1.0.2 - Free & Open Architecture
+## [1.0.3] - 2026-10-05
+
+### 🐛 Fixed (Corrección Quirúrgica AFR)
+- **Resurrección del Auto Frame Rate (AFR):** Restaurada la sincronización algorítmica de hercios de forma inteligente. El motor lee el framerate exacto (23.976, 24, 25, 30, 50, 60fps) y conmuta la salida HDMI **solo** cuando existe un desajuste real con la interfaz de usuario, mitigando parpadeos o saltos de *Handshake* innecesarios en contenido a 60Hz.
+- **Resolución de Tipado Estricto (LibVLC):** Corregido el mapeo estructural de extracción de metadatos (pistas de vídeo) en el motor C++ (migrando de `Media.Track` a `IMedia.Track`), blindando el código contra colapsos estáticos.
+- **Limpieza de Hardware:** Se garantiza la restauración asíncrona de los hercios originales del escritorio de Android TV tras destruir la instancia del reproductor.
+- 
+## ADRMediaChannels v1.0.2 - Free & Open Architecture
 
 Esta actualización marca un hito estructural en el proyecto. ADRMediaChannels pasa a un modelo 100% libre, extirpando cualquier barrera de entrada o límite de uso, y reconstruyendo desde cero los motores de reproducción y la estabilidad de red para operar bajo máxima exigencia en dispositivos como la Nvidia Shield TV.
 
-## 🔓 Modelo 100% Gratuito y Abierto
+### 🔓 Modelo 100% Gratuito y Abierto
 - **Autenticación Silenciosa (Zero-Friction):** Eliminado el muro de pago de 16 días, la restricción de cuentas por correo electrónico y el límite de dispositivos de hardware por usuario.
 - **Acceso Directo:** La aplicación emplea ahora una identidad local persistente y anónima. Instalar y usar.
 - **Backend Optimizado:** Las reglas de Firebase Firestore se han reescrito para priorizar la estabilidad operativa (consumo de CPU del 0%) manteniendo un Kill-Switch administrativo exclusivo para auditorías de seguridad, sin afectar la experiencia de uso.
 
-## ⚙️ Nuevos Motores de Decodificación (Zero-Lag)
+### ⚙️ Nuevos Motores de Decodificación (Zero-Lag)
 - **Segregación Quirúrgica:** Se ha sustituido el reproductor monolítico obsoleto por una arquitectura híbrida especializada:
   - **Motor de Vídeo (LibVLC):** Integración nativa mediante JNI en C++ para asegurar una lectura fluida en red (SMB) de formatos Legacy y pesados (MKV, VOB, AVI, M2TS) sin transcodificación por parte del servidor.
   - **Motor de Audio (Media3 / ExoPlayer):** Nueva implementación aligerada con desactivación explícita de `Audio Offload` para garantizar compatibilidad bit-perfect en pistas musicales de alta fidelidad (FLAC/MP3) directamente sobre el hardware.
 
-## 🎬 Movimiento de Cine (AFR)
+### 🎬 Movimiento de Cine (AFR)
 - **Auto Frame Rate (AFR):** Implementada la sincronización automática de hercios entre el panel del televisor y el framerate nativo del contenido (23.976, 24, 25, 50, 60 Hz). Errradica el *judder* manteniendo intacta la resolución 4K de la interfaz de usuario.
 
-## 🛡️ Estabilidad UI y Red
+### 🛡️ Estabilidad UI y Red
 - **Cero Ghosting en UI:** Purgados los cierres forzados por pérdida de puntero de foco en Compose TV al navegar rápidamente entre subcarpetas.
 - **Debounce de I/O de Red:** Implementado un escudo antiahogo en el cliente SMB. Retrasos dinámicos (150ms a 300ms) durante la exploración rápida con el D-Pad para evitar la saturación del servidor NAS cuando se cargan directorios con miles de archivos.
 
-## 🛠️ Notas de Instalación y Requisitos
+### 🛠️ Notas de Instalación y Requisitos
 La aplicación requiere un ecosistema de hardware capaz de absorber el ancho de banda del protocolo SMB (ráfagas pesadas) sin caché de servidor intermediario. 
 - **SO Mínimo:** Android 11+ (API 30).
 - **Hardware Recomendado:** Nvidia Shield TV o TV Box equivalente (Arquitectura 64-bits, Mínimo 3 GB de RAM).
