@@ -1,12 +1,22 @@
 # CHANGELOG: ADRMediaChannels
 
+## [1.0.4] - 2026-10-05
+
+### 🚀 Added (Nuevo Motor OTA Nativo)
+*   **Integración Directa con GitHub API:** Se ha reescrito por completo el sistema de actualizaciones (Over-The-Air). La aplicación ahora se conecta de forma segura a la API pública de GitHub (`/releases/latest`) para buscar, validar y extraer dinámicamente las nuevas versiones, parseando el `tag_name` y localizando el `.apk` sin depender de servidores de versionado externos.
+*   **Vigilante en la Sombra:** Inyección de un comprobador asíncrono atado a la cúpula de navegación de Compose TV. Busca actualizaciones de forma silenciosa al arrancar (solo en perfiles autorizados) y notifica al usuario mediante un componente `Dialog` nativo no intrusivo.
+*   **Máquina de Estados UI:** Reestructuración de la sección de "Actualización" en los Ajustes, mapeando el sellado `OtaState` para reflejar en tiempo real el progreso de la red y las descargas.
+
+### ⚙️ Changed (Optimizaciones de Seguridad)
+*   **Gestión de Descargas Asíncronas:** Implementación del `DownloadManager` con anclaje de un `BroadcastReceiver` adaptado a las políticas de exportación estrictas de Android 13+ (Tiramisu), garantizando que el instalador del sistema sea disparado con el flag `FLAG_GRANT_READ_URI_PERMISSION` de forma segura.
+
 ## [1.0.3] - 2026-10-05
 
 ### 🐛 Fixed (Corrección Quirúrgica AFR)
 - **Resurrección del Auto Frame Rate (AFR):** Restaurada la sincronización algorítmica de hercios de forma inteligente. El motor lee el framerate exacto (23.976, 24, 25, 30, 50, 60fps) y conmuta la salida HDMI **solo** cuando existe un desajuste real con la interfaz de usuario, mitigando parpadeos o saltos de *Handshake* innecesarios en contenido a 60Hz.
 - **Resolución de Tipado Estricto (LibVLC):** Corregido el mapeo estructural de extracción de metadatos (pistas de vídeo) en el motor C++ (migrando de `Media.Track` a `IMedia.Track`), blindando el código contra colapsos estáticos.
 - **Limpieza de Hardware:** Se garantiza la restauración asíncrona de los hercios originales del escritorio de Android TV tras destruir la instancia del reproductor.
-- 
+
 ## ADRMediaChannels v1.0.2 - Free & Open Architecture
 
 Esta actualización marca un hito estructural en el proyecto. ADRMediaChannels pasa a un modelo 100% libre, extirpando cualquier barrera de entrada o límite de uso, y reconstruyendo desde cero los motores de reproducción y la estabilidad de red para operar bajo máxima exigencia en dispositivos como la Nvidia Shield TV.
