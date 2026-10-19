@@ -1,5 +1,17 @@
 # CHANGELOG: ADRMediaChannels
 
+## [1.0.5] - 2026-10-20
+
+### 🚀 Added (Geometría Visual Adaptable)
+*   **Renderizado Condicional en Compose:** El módulo de Aplicaciones ahora detecta dinámicamente la proporción geométrica (aspect ratio) del arte extraído de cada paquete. Los *Banners* nativos panorámicos de Android TV se expanden al 100% de la superficie de la tarjeta (`ContentScale.Crop`), mientras que los iconos clásicos/sideload conservan su tamaño absoluto con el título en la parte inferior.
+
+### 🐛 Fixed (Motor de Lanzamiento de Apps)
+*   **Enrutamiento Leanback Estricto:** Reconstruido el puente algorítmico de lanzamiento de `Intents`. Las plataformas limitadas exclusivamente al ecosistema Android TV puro (como Orange TV, Prime Video o Netflix) ahora resuelven y arrancan correctamente mediante un escaneo explícito de la categoría `CATEGORY_LEANBACK_LAUNCHER`.
+
+### ⚙️ Changed (Filosofía y Estabilidad de Producción)
+*   **Purga de Donaciones (100% Free):** Eliminado el motor de soporte vía código QR (Ko-fi) en la sección de Créditos. Se ha refactorizado la topología del panel para centrar armónicamente el logotipo, los datos de compilación y la licencia del proyecto, reafirmando su filosofía altruista.
+*   **Blindaje R8/ProGuard:** Inyectadas reglas de preservación estrictas para proteger los constructores de los `ViewModels` inyectados por Koin y las firmas de los *Savers* de Jetpack Compose, garantizando cero *Process Death* en la compilación a *Release*.
+*   
 ## [1.0.4] - 2026-10-05
 
 ### 🚀 Added (Nuevo Motor OTA Nativo)
